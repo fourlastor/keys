@@ -7,7 +7,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-inline fun <reified VM: ViewModel> assistedViewModel(
+inline fun <reified VM : ViewModel> assistedViewModel(
   crossinline factory: () -> VM,
 ): VM = viewModel(
   VM::class.java,

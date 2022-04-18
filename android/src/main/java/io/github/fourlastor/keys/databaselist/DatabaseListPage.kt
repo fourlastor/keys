@@ -4,7 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Storage
 import androidx.compose.runtime.Composable
@@ -20,15 +21,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import io.github.fourlastor.keys.AppWrapper
 import io.github.fourlastor.keys.id.LongId
+import io.github.fourlastor.keys.keylist.KeyListNavigation
 
 fun NavGraphBuilder.databaseListPage(
   navHostController: NavHostController
 ) {
 
-  composable("list") {
+  composable(DatabaseListNavigation.ROUTE) {
     DatabaseListPage(
       viewModel = hiltViewModel(),
-    ) { navHostController.navigate("keys") }
+    ) { navHostController.navigate(KeyListNavigation.go()) }
   }
 }
 
@@ -46,9 +48,9 @@ fun DatabaseListPage(
 private fun DatabaseList(
   databases: List<Database>,
   onDbSelected: OnDbSelected
-) = Box (
+) = Box(
   modifier = Modifier.fillMaxSize()
-    ) {
+) {
   if (databases.isEmpty()) {
     Text(text = "No databases!", modifier = Modifier.align(Alignment.Center))
   } else {
