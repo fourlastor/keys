@@ -12,10 +12,13 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.VpnKey
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -26,17 +29,16 @@ import io.github.fourlastor.keys.keydetails.KeyDetailsNavigation
 
 fun NavGraphBuilder.keyListPage(navController: NavHostController) =
   composable(KeyListNavigation.ROUTE) {
-    KeyListPage(navController)
+    KeyListPage(navController, hiltViewModel())
   }
 
 @Composable
-fun KeyListPage(navController: NavHostController) = KeyList(
-  listOf(
-    demoKey("user@example.com"),
-    demoKey("other@example.com"),
-    demoKey("and@example.com"),
-  )
-) { navController.navigate(KeyDetailsNavigation.go(it)) }
+fun KeyListPage(navController: NavHostController, viewModel: KeyListViewModel) {
+  val keys by viewModel.observeKeys()
+    .collectAsState(initial = emptyList())
+
+  KeyList(keys = keys) { navController.navigate(KeyDetailsNavigation.go(it)) }
+}
 
 @Composable
 private fun KeyList(

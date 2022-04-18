@@ -35,7 +35,7 @@ fun NavGraphBuilder.databaseListPage(
 }
 
 @Composable
-fun DatabaseListPage(
+private fun DatabaseListPage(
   viewModel: DatabaseListViewModel,
   onDbSelected: OnDbSelected,
 ) {
