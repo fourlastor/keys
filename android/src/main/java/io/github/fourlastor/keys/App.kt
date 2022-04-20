@@ -1,14 +1,11 @@
 package io.github.fourlastor.keys
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.QrCodeScanner
-import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.QrCodeScanner
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
@@ -16,7 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import io.github.fourlastor.keys.databaselist.DatabaseListNavigation
@@ -25,7 +21,6 @@ import io.github.fourlastor.keys.keydetails.keyDetailsPage
 import io.github.fourlastor.keys.keylist.KeyListNavigation
 import io.github.fourlastor.keys.keylist.keyListPage
 import io.github.fourlastor.keys.ui.theme.KeysTheme
-import kotlinx.coroutines.flow.map
 
 @Composable
 fun App() {
