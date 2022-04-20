@@ -1,10 +1,7 @@
 package io.github.fourlastor.keys.keylist
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
@@ -73,7 +70,7 @@ private fun KeyListItem(
 @Preview
 @Composable
 private fun ListPreview() {
-  AppWrapper {
+  KeyWrapperPreview {
     KeyList(
       keys = listOf(
         demoKey("user@example.com"),
@@ -97,12 +94,20 @@ private fun demoKey(name: String) = OtpKey(
 
 @Preview
 @Composable
-private fun EmptyListPreview() = AppWrapper {
+private fun EmptyListPreview() = KeyWrapperPreview {
   KeyList(
     keys = emptyList(),
     onKeySelected = {},
   )
 }
+
+@Composable
+private fun KeyWrapperPreview(
+  content: @Composable (PaddingValues) -> Unit
+) = AppWrapper(
+  KeyListNavigation.ROUTE,
+  content,
+)
 
 data class OtpKey(
   val id: LongId<OtpKey>,

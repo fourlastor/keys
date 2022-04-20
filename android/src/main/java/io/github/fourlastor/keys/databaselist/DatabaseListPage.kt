@@ -80,7 +80,7 @@ private typealias OnDbSelected = (LongId<Database>) -> Unit
 
 @Preview
 @Composable
-private fun ListPreview() = AppWrapper {
+private fun ListPreview() = DbWrapperPreview {
   DatabaseList(
     databases = listOf(
       Database(LongId(1), "First db"),
@@ -93,9 +93,17 @@ private fun ListPreview() = AppWrapper {
 
 @Preview
 @Composable
-private fun EmptyListPreview() = AppWrapper {
+private fun EmptyListPreview() = DbWrapperPreview {
   DatabaseList(
     databases = emptyList(),
     onDbSelected = {}
   )
 }
+
+@Composable
+private fun DbWrapperPreview(
+  content: @Composable (PaddingValues) -> Unit
+) = AppWrapper(
+  DatabaseListNavigation.ROUTE,
+  content,
+)
