@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Storage
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -34,14 +35,24 @@ fun NavGraphBuilder.databaseListPage(
   }
 }
 
+typealias OnDbSelected = (LongId<Database>) -> Unit
+
 @Composable
 private fun DatabaseListPage(
   viewModel: DatabaseListViewModel,
   onDbSelected: OnDbSelected,
 ) {
-  val databases by viewModel.observeDatabases()
+  val databases by viewModel.databases
     .collectAsState(initial = emptyList())
   DatabaseList(databases = databases, onDbSelected = onDbSelected)
+
+  LaunchedEffect(Unit) {
+    listOf(
+      Database(LongId(1), "First db"),
+      Database(LongId(2), "Second db"),
+      Database(LongId(3), "Third db")
+    ).forEach { viewModel.addDb(it) }
+  }
 }
 
 @Composable
@@ -75,8 +86,6 @@ private fun DatabaseListItem(
   Icon(imageVector = Icons.Rounded.Storage, contentDescription = null)
   Text(text = database.name)
 }
-
-private typealias OnDbSelected = (LongId<Database>) -> Unit
 
 @Preview
 @Composable

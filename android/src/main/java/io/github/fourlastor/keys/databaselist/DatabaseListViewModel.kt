@@ -2,20 +2,18 @@ package io.github.fourlastor.keys.databaselist
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.fourlastor.keys.id.LongId
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import io.github.fourlastor.keys.data.database.DatabaseRepository
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
 class DatabaseListViewModel
 @Inject
-constructor() : ViewModel() {
-  fun observeDatabases(): Flow<List<Database>> = flowOf(
-    listOf(
-      Database(LongId(1), "First db"),
-      Database(LongId(2), "Second db"),
-      Database(LongId(3), "Third db"),
-    )
-  )
+constructor(
+  private val repository: DatabaseRepository,
+) : ViewModel() {
+  val databases: Flow<List<Database>>
+    get() = repository.observe()
+
+  suspend fun addDb(database: Database) = repository.insert(database)
 }
