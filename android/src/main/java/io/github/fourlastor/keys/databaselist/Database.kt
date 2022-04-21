@@ -1,6 +1,6 @@
 package io.github.fourlastor.keys.databaselist
 
-import io.github.fourlastor.keys.id.LongId
+import io.github.fourlastor.keys.data.model.LongId
 
 data class Database(
   val id: LongId<Database>,

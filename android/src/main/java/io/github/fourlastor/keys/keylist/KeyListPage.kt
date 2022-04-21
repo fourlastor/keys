@@ -20,7 +20,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import io.github.fourlastor.keys.AppWrapper
-import io.github.fourlastor.keys.id.LongId
+import io.github.fourlastor.keys.data.model.LongId
 import io.github.fourlastor.keys.keydetails.KeyDetailsNavigation
 
 
