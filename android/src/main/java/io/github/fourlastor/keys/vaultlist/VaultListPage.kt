@@ -1,4 +1,4 @@
-package io.github.fourlastor.keys.databaselist
+package io.github.fourlastor.keys.vaultlist
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,50 +24,50 @@ import io.github.fourlastor.keys.AppWrapper
 import io.github.fourlastor.keys.data.model.LongId
 import io.github.fourlastor.keys.keylist.KeyListNavigation
 
-fun NavGraphBuilder.databaseListPage(
+fun NavGraphBuilder.vaultListPage(
   navHostController: NavHostController
 ) {
 
-  composable(DatabaseListNavigation.ROUTE) {
-    DatabaseListPage(
+  composable(VaultListNavigation.ROUTE) {
+    VaultListPage(
       viewModel = hiltViewModel(),
     ) { navHostController.navigate(KeyListNavigation.go()) }
   }
 }
 
-typealias OnDbSelected = (LongId<Database>) -> Unit
+typealias OnVaultSelected = (LongId<Vault>) -> Unit
 
 @Composable
-private fun DatabaseListPage(
-  viewModel: DatabaseListViewModel,
-  onDbSelected: OnDbSelected,
+private fun VaultListPage(
+  viewModel: VaultListViewModel,
+  onVaultSelected: OnVaultSelected,
 ) {
-  val databases by viewModel.databases
+  val vaults by viewModel.vaults
     .collectAsState(initial = emptyList())
-  DatabaseList(databases = databases, onDbSelected = onDbSelected)
+  DatabaseList(vaults = vaults, onVaultSelected = onVaultSelected)
 
   LaunchedEffect(Unit) {
     listOf(
-      Database(LongId(1), "First db"),
-      Database(LongId(2), "Second db"),
-      Database(LongId(3), "Third db")
+      Vault(LongId(1), "First db"),
+      Vault(LongId(2), "Second db"),
+      Vault(LongId(3), "Third db")
     ).forEach { viewModel.addDb(it) }
   }
 }
 
 @Composable
 private fun DatabaseList(
-  databases: List<Database>,
-  onDbSelected: OnDbSelected
+  vaults: List<Vault>,
+  onVaultSelected: OnVaultSelected
 ) = Box(
   modifier = Modifier.fillMaxSize()
 ) {
-  if (databases.isEmpty()) {
+  if (vaults.isEmpty()) {
     Text(text = "No databases!", modifier = Modifier.align(Alignment.Center))
   } else {
     LazyColumn {
-      items(databases) {
-        DatabaseListItem(it, onDbSelected)
+      items(vaults) {
+        DatabaseListItem(it, onVaultSelected)
       }
     }
   }
@@ -75,28 +75,28 @@ private fun DatabaseList(
 
 @Composable
 private fun DatabaseListItem(
-  database: Database,
-  onDbSelected: OnDbSelected
+  vault: Vault,
+  onVaultSelected: OnVaultSelected
 ) = Row(
   modifier = Modifier
     .padding(4.dp)
     .fillMaxWidth()
-    .clickable { onDbSelected(database.id) }
+    .clickable { onVaultSelected(vault.id) }
 ) {
   Icon(imageVector = Icons.Rounded.Storage, contentDescription = null)
-  Text(text = database.name)
+  Text(text = vault.name)
 }
 
 @Preview
 @Composable
 private fun ListPreview() = DbWrapperPreview {
   DatabaseList(
-    databases = listOf(
-      Database(LongId(1), "First db"),
-      Database(LongId(2), "Second db"),
-      Database(LongId(3), "Third db"),
+    vaults = listOf(
+      Vault(LongId(1), "First db"),
+      Vault(LongId(2), "Second db"),
+      Vault(LongId(3), "Third db"),
     ),
-    onDbSelected = {}
+    onVaultSelected = {}
   )
 }
 
@@ -104,8 +104,8 @@ private fun ListPreview() = DbWrapperPreview {
 @Composable
 private fun EmptyListPreview() = DbWrapperPreview {
   DatabaseList(
-    databases = emptyList(),
-    onDbSelected = {}
+    vaults = emptyList(),
+    onVaultSelected = {}
   )
 }
 
@@ -113,6 +113,6 @@ private fun EmptyListPreview() = DbWrapperPreview {
 private fun DbWrapperPreview(
   content: @Composable (PaddingValues) -> Unit
 ) = AppWrapper(
-  DatabaseListNavigation.ROUTE,
+  VaultListNavigation.ROUTE,
   content,
 )

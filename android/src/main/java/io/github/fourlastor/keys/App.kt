@@ -15,8 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import io.github.fourlastor.keys.databaselist.DatabaseListNavigation
-import io.github.fourlastor.keys.databaselist.databaseListPage
+import io.github.fourlastor.keys.vaultlist.VaultListNavigation
+import io.github.fourlastor.keys.vaultlist.vaultListPage
 import io.github.fourlastor.keys.keydetails.keyDetailsPage
 import io.github.fourlastor.keys.keylist.KeyListNavigation
 import io.github.fourlastor.keys.keylist.keyListPage
@@ -33,8 +33,8 @@ fun App() {
   val route by derivedStateOf { backStackEntry?.destination?.route }
 
   AppWrapper(route = route) {
-    NavHost(navController = navController, startDestination = DatabaseListNavigation.ROUTE) {
-      databaseListPage(navController)
+    NavHost(navController = navController, startDestination = VaultListNavigation.go()) {
+      vaultListPage(navController)
       keyListPage(navController)
       keyDetailsPage()
     }
@@ -57,7 +57,7 @@ fun AppWrapper(
         onClick = { }
       ) {
         val icon = when (route) {
-          DatabaseListNavigation.ROUTE -> Icons.Rounded.Add
+          VaultListNavigation.ROUTE -> Icons.Rounded.Add
           KeyListNavigation.ROUTE -> Icons.Rounded.QrCodeScanner
           else -> Icons.Rounded.Add
         }
