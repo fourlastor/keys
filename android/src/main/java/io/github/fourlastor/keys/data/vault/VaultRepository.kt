@@ -1,18 +1,19 @@
 package io.github.fourlastor.keys.data.vault
 
-import io.github.fourlastor.keys.data.Var
+import io.github.fourlastor.keys.data.model.LongId
 import io.github.fourlastor.keys.vaultlist.Vault
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class VaultRepository @Inject constructor() {
+class VaultRepository @Inject constructor(
+  private val vaults: VaultDao,
+) {
 
-  private val vaults: Var<List<Vault>> = Var.create(emptyList())
+  fun observe(): Flow<List<Vault>> =
+    vaults.observe().map { vaults -> vaults.map { Vault(LongId(it.id), it.name) } }
 
-  fun observe(): Flow<List<Vault>> = vaults.observe()
-
-  suspend fun insert(vault: Vault) = vaults.update { it.plus(vault) }
-
+  suspend fun insert(vault: Vault) = vaults.insert(VaultEntity(vault.name))
 }
