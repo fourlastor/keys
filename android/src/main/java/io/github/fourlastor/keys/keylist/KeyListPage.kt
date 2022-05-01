@@ -1,7 +1,11 @@
 package io.github.fourlastor.keys.keylist
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
@@ -19,7 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import io.github.fourlastor.keys.AppWrapper
+import io.github.fourlastor.keys.DemoWrapper
 import io.github.fourlastor.keys.data.model.LongId
 import io.github.fourlastor.keys.keydetails.KeyDetailsNavigation
 
@@ -104,7 +108,7 @@ private fun EmptyListPreview() = KeyWrapperPreview {
 @Composable
 private fun KeyWrapperPreview(
   content: @Composable (PaddingValues) -> Unit
-) = AppWrapper(
+) = DemoWrapper(
   KeyListNavigation.ROUTE,
   content,
 )
