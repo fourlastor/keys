@@ -1,9 +1,6 @@
 package io.github.fourlastor.keys
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.ExperimentalMaterialApi
@@ -11,7 +8,6 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.QrCodeScanner
@@ -26,12 +22,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
-import com.google.accompanist.navigation.material.bottomSheet
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
+import io.github.fourlastor.keys.keyadd.KeyAddNavigation
+import io.github.fourlastor.keys.keyadd.keyAddPage
 import io.github.fourlastor.keys.keydetails.keyDetailsPage
 import io.github.fourlastor.keys.keylist.KeyListNavigation
 import io.github.fourlastor.keys.keylist.keyListPage
 import io.github.fourlastor.keys.ui.theme.KeysTheme
+import io.github.fourlastor.keys.vaultadd.VaultAddNavigation
+import io.github.fourlastor.keys.vaultadd.vaultAddPage
 import io.github.fourlastor.keys.vaultlist.VaultListNavigation
 import io.github.fourlastor.keys.vaultlist.vaultListPage
 
@@ -49,8 +48,8 @@ fun App() {
 
   AppWrapper(route = route, onFabClicked = {
     when (route) {
-      VaultListNavigation.ROUTE -> "add_vault"
-      KeyListNavigation.ROUTE -> "add_key"
+      VaultListNavigation.ROUTE -> VaultAddNavigation.go()
+      KeyListNavigation.ROUTE -> KeyAddNavigation.go()
       else -> null
     }?.also { navController.navigate(it) }
   }) {
@@ -59,24 +58,8 @@ fun App() {
         vaultListPage(navController)
         keyListPage(navController)
         keyDetailsPage()
-        bottomSheet("add_vault") {
-          Box(
-            modifier = Modifier
-              .fillMaxWidth()
-              .height(200.dp)
-          ) {
-            Text(text = "Add vault!")
-          }
-        }
-        bottomSheet("add_key") {
-          Box(
-            modifier = Modifier
-              .fillMaxWidth()
-              .height(200.dp)
-          ) {
-            Text(text = "Add key!")
-          }
-        }
+        vaultAddPage()
+        keyAddPage()
       }
     }
   }
