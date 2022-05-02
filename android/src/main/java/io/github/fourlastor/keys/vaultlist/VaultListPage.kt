@@ -41,7 +41,7 @@ fun NavGraphBuilder.vaultListPage(
     VaultListPage(
       viewModel = hiltViewModel(),
       onVaultSelected = { navHostController.navigate(KeyListNavigation.go()) },
-      onFabSelected = { navHostController.navigate(VaultAddNavigation.go()) },
+      onFabClicked = { navHostController.navigate(VaultAddNavigation.go()) },
     )
   }
 }
@@ -52,10 +52,10 @@ typealias OnVaultSelected = (LongId<Vault>) -> Unit
 private fun VaultListPage(
   viewModel: VaultListViewModel,
   onVaultSelected: OnVaultSelected,
-  onFabSelected: () -> Unit,
+  onFabClicked: () -> Unit,
 ) = Page(
   fab = {
-    FloatingActionButton(onClick = onFabSelected) {
+    FloatingActionButton(onClick = onFabClicked) {
       Icon(
         imageVector = Icons.Rounded.Add,
         contentDescription = "Add",

@@ -33,13 +33,21 @@ import io.github.fourlastor.keys.page.Page
 
 fun NavGraphBuilder.keyListPage(navController: NavHostController) =
   composable(KeyListNavigation.ROUTE) {
-    KeyListPage(navController, hiltViewModel())
+    KeyListPage(
+      viewModel = hiltViewModel(),
+      onAddKey = { navController.navigate(KeyAddNavigation.go()) },
+      onKeySelected = { navController.navigate(KeyDetailsNavigation.go(it)) },
+    )
   }
 
 @Composable
-fun KeyListPage(navController: NavHostController, viewModel: KeyListViewModel) = Page(
+fun KeyListPage(
+  viewModel: KeyListViewModel,
+  onAddKey: () -> Unit,
+  onKeySelected: OnKeySelected,
+) = Page(
   fab = {
-    FloatingActionButton(onClick = { navController.navigate(KeyAddNavigation.go()) }) {
+    FloatingActionButton(onClick = onAddKey) {
       Icon(
         imageVector = Icons.Rounded.QrCodeScanner,
         contentDescription = "Add",
@@ -51,7 +59,7 @@ fun KeyListPage(navController: NavHostController, viewModel: KeyListViewModel) =
   val keys by viewModel.observeKeys()
     .collectAsState(initial = emptyList())
 
-  KeyList(keys = keys) { navController.navigate(KeyDetailsNavigation.go(it)) }
+  KeyList(keys = keys, onKeySelected = onKeySelected)
 }
 
 @Composable
