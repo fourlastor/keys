@@ -2,16 +2,18 @@ package io.github.fourlastor.keys.vaultlist
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Storage
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,6 +30,8 @@ import androidx.navigation.compose.composable
 import io.github.fourlastor.keys.DemoWrapper
 import io.github.fourlastor.keys.data.model.LongId
 import io.github.fourlastor.keys.keylist.KeyListNavigation
+import io.github.fourlastor.keys.page.Page
+import io.github.fourlastor.keys.vaultadd.VaultAddNavigation
 
 fun NavGraphBuilder.vaultListPage(
   navHostController: NavHostController
@@ -36,7 +40,9 @@ fun NavGraphBuilder.vaultListPage(
   composable(VaultListNavigation.ROUTE) {
     VaultListPage(
       viewModel = hiltViewModel(),
-    ) { navHostController.navigate(KeyListNavigation.go()) }
+      onVaultSelected = { navHostController.navigate(KeyListNavigation.go()) },
+      onFabSelected = { navHostController.navigate(VaultAddNavigation.go()) },
+    )
   }
 }
 
@@ -46,11 +52,21 @@ typealias OnVaultSelected = (LongId<Vault>) -> Unit
 private fun VaultListPage(
   viewModel: VaultListViewModel,
   onVaultSelected: OnVaultSelected,
+  onFabSelected: () -> Unit,
+) = Page(
+  fab = {
+    FloatingActionButton(onClick = onFabSelected) {
+      Icon(
+        imageVector = Icons.Rounded.Add,
+        contentDescription = "Add",
+        modifier = Modifier.size(42.dp)
+      )
+    }
+  },
 ) {
   val vaults by viewModel.vaults
     .collectAsState(initial = emptyList())
   VaultList(vaults = vaults, onVaultSelected = onVaultSelected)
-
   LaunchedEffect(Unit) {
     listOf(
       Vault(LongId(1), "First vault"),
@@ -58,6 +74,7 @@ private fun VaultListPage(
       Vault(LongId(3), "Third vault")
     ).forEach { viewModel.addVault(it) }
   }
+
 }
 
 @Composable
@@ -116,8 +133,7 @@ private fun EmptyListPreview() = VaultWrapperPreview {
 
 @Composable
 private fun VaultWrapperPreview(
-  content: @Composable (PaddingValues) -> Unit
+  content: @Composable () -> Unit
 ) = DemoWrapper(
-  VaultListNavigation.ROUTE,
   content,
 )

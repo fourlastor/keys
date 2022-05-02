@@ -4,6 +4,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import io.github.fourlastor.keys.page.Page
 
 
 fun NavGraphBuilder.keyDetailsPage() {
@@ -13,6 +14,6 @@ fun NavGraphBuilder.keyDetailsPage() {
 }
 
 @Composable
-private fun KeyDetailsPage() {
+private fun KeyDetailsPage() = Page {
   Text(text = "key details")
 }
