@@ -8,6 +8,7 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/**/deploymentTargetDropDown.xml
 
 # Generated files
 .idea/**/contentModel.xml
@@ -20,6 +21,7 @@
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+.idea/**/misc.xml
 
 # Gradle
 .idea/**/gradle.xml
@@ -300,4 +302,3 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
-

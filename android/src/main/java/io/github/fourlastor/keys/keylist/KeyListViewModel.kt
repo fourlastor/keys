@@ -2,7 +2,7 @@ package io.github.fourlastor.keys.keylist
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.fourlastor.keys.id.LongId
+import io.github.fourlastor.keys.data.model.LongId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject

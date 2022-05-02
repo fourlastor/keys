@@ -1,6 +1,6 @@
 package io.github.fourlastor.keys.keydetails
 
-import io.github.fourlastor.keys.id.LongId
+import io.github.fourlastor.keys.data.model.LongId
 import io.github.fourlastor.keys.keylist.OtpKey
 
 object KeyDetailsNavigation {
