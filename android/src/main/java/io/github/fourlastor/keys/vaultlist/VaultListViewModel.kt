@@ -15,5 +15,5 @@ constructor(
   val vaults: Flow<List<Vault>>
     get() = repository.observe()
 
-  suspend fun addDb(vault: Vault) = repository.insert(vault)
+  suspend fun addVault(vault: Vault) = repository.insert(vault)
 }

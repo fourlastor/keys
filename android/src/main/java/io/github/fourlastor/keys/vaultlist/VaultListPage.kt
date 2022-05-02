@@ -49,37 +49,37 @@ private fun VaultListPage(
 ) {
   val vaults by viewModel.vaults
     .collectAsState(initial = emptyList())
-  DatabaseList(vaults = vaults, onVaultSelected = onVaultSelected)
+  VaultList(vaults = vaults, onVaultSelected = onVaultSelected)
 
   LaunchedEffect(Unit) {
     listOf(
-      Vault(LongId(1), "First db"),
-      Vault(LongId(2), "Second db"),
-      Vault(LongId(3), "Third db")
-    ).forEach { viewModel.addDb(it) }
+      Vault(LongId(1), "First vault"),
+      Vault(LongId(2), "Second vault"),
+      Vault(LongId(3), "Third vault")
+    ).forEach { viewModel.addVault(it) }
   }
 }
 
 @Composable
-private fun DatabaseList(
+private fun VaultList(
   vaults: List<Vault>,
   onVaultSelected: OnVaultSelected
 ) = Box(
   modifier = Modifier.fillMaxSize()
 ) {
   if (vaults.isEmpty()) {
-    Text(text = "No databases!", modifier = Modifier.align(Alignment.Center))
+    Text(text = "No vault!", modifier = Modifier.align(Alignment.Center))
   } else {
     LazyColumn {
       items(vaults) {
-        DatabaseListItem(it, onVaultSelected)
+        VaultListItem(it, onVaultSelected)
       }
     }
   }
 }
 
 @Composable
-private fun DatabaseListItem(
+private fun VaultListItem(
   vault: Vault,
   onVaultSelected: OnVaultSelected
 ) = Row(
@@ -94,12 +94,12 @@ private fun DatabaseListItem(
 
 @Preview
 @Composable
-private fun ListPreview() = DbWrapperPreview {
-  DatabaseList(
+private fun ListPreview() = VaultWrapperPreview {
+  VaultList(
     vaults = listOf(
-      Vault(LongId(1), "First db"),
-      Vault(LongId(2), "Second db"),
-      Vault(LongId(3), "Third db"),
+      Vault(LongId(1), "First vault"),
+      Vault(LongId(2), "Second vault"),
+      Vault(LongId(3), "Third vault"),
     ),
     onVaultSelected = {}
   )
@@ -107,15 +107,15 @@ private fun ListPreview() = DbWrapperPreview {
 
 @Preview
 @Composable
-private fun EmptyListPreview() = DbWrapperPreview {
-  DatabaseList(
+private fun EmptyListPreview() = VaultWrapperPreview {
+  VaultList(
     vaults = emptyList(),
     onVaultSelected = {}
   )
 }
 
 @Composable
-private fun DbWrapperPreview(
+private fun VaultWrapperPreview(
   content: @Composable (PaddingValues) -> Unit
 ) = DemoWrapper(
   VaultListNavigation.ROUTE,
